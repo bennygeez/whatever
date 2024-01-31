@@ -1,0 +1,60 @@
+.card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+  }
+  
+  .card-header-parent {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .card-header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .avatar-container {
+    border: 1px solid var(--gray300);
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .user-details {
+    margin-left: 10px;
+  }
+  
+  .user-name,
+  .user-location,
+  .user-age,
+  .user-gender {
+    margin: 5px 0;
+    color: wheat;
+  }
+  
+  .card-content {
+    margin-top: 10px;
+  }
+  
+  .hourly-block {
+    display: flex;
+    margin-bottom: 5px;
+  }
+  
+  .hourly-label {
+    margin-right: 5px;
+    font-weight: bold;
+    color: var(--primary);
+  }
+  
+  .hourly-value {
+    color: white;
+  }
+          
+  /* .ant-select:not(.ant-select-customize-input) .ant-select-selector{
+    border: 2px solid var(--textColor) !important;
+} */
+.ant-select-selector:hover{
+    border: 0px
+}
