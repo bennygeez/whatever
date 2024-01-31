@@ -89,7 +89,7 @@ const addClick = async (req, res) => {
 
   try {
     const attachmentId = req.params.attachmentId;
-    
+
     // Find the attachment by ID and increment the clicks count
     const updatedAttachment = await Attachment.findByIdAndUpdate(
       attachmentId,
@@ -146,37 +146,8 @@ const getRecentAttachments = async (req, res) => {
           name: 1,
           email: 1,
           photo: 1,
-          attachments: 1,
-          city: 1,
-          age: 1,
-          gender: 1,
-          hourly: 1,
-          location:1,
-          hostavailable:1,
-          sexualOrientation:1,
-          selectedEthnicities:1,
-          bodyRating:1,
-          assSize:1,
-          bodyType:1,
-          breastCupSize:1,
-          languages:1,
-          hairColor:1,
-          feet:1,
-          inches:1,
-          weight:1,
-          penisGirth:1,
-          penisSize:1,
-          bondage:1,
-          useToys:1,
-          threesome:1,
-          roleplay:1,
-          orgies:1,
-          oral:1,
-          footjob:1,
-          events:1,
-          doublePenetration:1
-
-        } 
+          attachments: 1
+        }
       }
     ]);
 
@@ -194,27 +165,34 @@ const getNearByAttachments = async (req, res) => {
     let longitude = location?.coordinates?.[0],
       latitude = location?.coordinates?.[1];
 
-    // Find users within the specified radius
-    const nearbyUsers = await User.find({
-      location: {
-        $near: {
-          $geometry: {
-            type: "Point",
-            coordinates: [parseFloat(longitude), parseFloat(latitude)]
-          },
-          $maxDistance: parseFloat(radiusInMiles) * 1609.34 // convert to meters
+    let nearestAttachments;
+    if (latitude && longitude) {
+      const nearbyUsers = await User.find({
+        location: {
+          $near: {
+            $geometry: {
+              type: "Point",
+              coordinates: [longitude, latitude]
+            },
+            $maxDistance: parseFloat(radiusInMiles) * 1609.34 // convert to meters
+          }
         }
-      }
-    }).select("_id");
+      }).select("_id");
 
-    // Find attachments created by nearby users
-    const nearestAttachments = await Attachment.find({
-      createdBy: { $in: nearbyUsers?.map((v) => v?._id) },
-      createdAt: { $gte: new Date().setUTCHours(0, 0, 0, 0) } // Filter for attachments created today
-    })
-      .sort({ clicks: -1, createdAt: -1 })
-      .populate("createdBy", "name email");
+      nearestAttachments = await Attachment.find({
+        createdBy: { $in: nearbyUsers?.map((v) => v?._id) },
+        createdAt: { $gte: new Date().setUTCHours(0, 0, 0, 0) } // Filter for attachments created today
+      })
+        .sort({ clicks: -1, createdAt: -1 })
+        .populate("createdBy", "name email photo");
+    } else {
+      nearestAttachments = await Attachment.find({
+        createdAt: { $gte: new Date().setUTCHours(0, 0, 0, 0) } // Filter for attachments created today
+      })
+        .sort({ clicks: -1, createdAt: -1 })
+        .populate("createdBy", "name email photo");
 
+    }
     res.json(nearestAttachments);
   } catch (error) {
     console.error(error);

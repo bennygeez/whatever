@@ -14,12 +14,11 @@ export const authSignup = (payload, navigate) => {
           description: res.data?.data.message,
           duration: 2,
         })
-        window.location.reload()
+        // window.location.reload()
         dispatch(authRequestToken(payload?.email))
         navigate('/verifyEmail', { state: { email: payload?.email } })
       }
     } catch (err) {
-      console.log("🚀 ~ return ~ err:", err)
       notification.error({
         message: err?.response?.data?.message || 'Server Error',
         duration: 3,

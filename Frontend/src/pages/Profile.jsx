@@ -10,14 +10,6 @@ import {
   Skeleton,
   Input,
   Button,
-  Space,
-  InputNumber,
-  Select,
-  Radio,
-  Form,
-  Slider,
-  Switch,
-  Checkbox,
 } from 'antd'
 import React, { createRef, useCallback, useEffect, useRef, useState } from 'react'
 import { CiVideoOn } from 'react-icons/ci'
@@ -55,7 +47,6 @@ const ProfilePreviewModal = ({ visible, imageUrl, onClose }) => {
 }
 
 const Profile = () => {
-  const { Option } = Select
   const dispatch = useDispatch()
   const user = useSelector((state) => state.auth.user)
   const files = useSelector((state) => state.attachment.files)
@@ -104,38 +95,11 @@ const Profile = () => {
       url: user?.photo ? `${imageBaseUrl}/${user?.photo}` : defaultProfilePicUrl,
     },
   ])
+
   const [formData, setFormData] = useState({
     name: 'name',
     email: 'email',
     bio: 'bio',
-    city: 'city',
-    age: 18,
-    // distance: 10,
-    gender: 'female',
-    hourly: [0, 24],
-    hostavailable: true,
-    selectedEthnicities: 'white',
-    sexualOrientation: 'straight',
-    bodyRating: 0,
-    feet: 0,
-    inches: 0,
-    weight: 0,
-    assSize: 'medium', // Set a default value for assSize
-    bodyType: 'average', // Set a default value for bodyType
-    hairColor: '',
-    breastCupSize: 'A', // Set a default value for breastCupSize
-    penisSize: 0,
-    penisGirth: 0,
-    languages: [],
-    threesome: false,
-    orgies: false,
-    useToys: false,
-    footjob: false,
-    roleplay: false,
-    events: false,
-    doublePenetration: false,
-    oral: false,
-    bondage: false,
   })
   const [currentVideo, setCurrentVideo] = useState(null)
 
@@ -158,34 +122,6 @@ const Profile = () => {
         name: user?.user?.name || '',
         email: user?.user?.email || '',
         bio: user?.user?.description || '',
-        city: user?.user?.city || '',
-        age: user?.user?.age || 18,
-        distance: user?.user?.distance || 10,
-        gender: user?.user?.gender || '',
-        hourly: user?.user?.hourly || [0, 24],
-        hostavailable: user?.user?.hostavailable || false,
-        selectedEthnicities: user?.user?.selectedEthnicities || '',
-        sexualOrientation: user?.user?.sexualOrientation || '',
-        bodyRating: user?.user?.bodyRating || 0,
-        feet: user?.user?.feet || 0,
-        inches: user?.user?.inches || 0,
-        weight: user?.user?.weight || 0,
-        assSize: user?.user?.assSize || '', // Set a default value for assSize
-        bodyType: user?.user?.bodyType || '', // Set a default value for bodyType
-        hairColor: user?.user?.hairColor || '',
-        breastCupSize: user?.user?.breastCupSize || '', // Set a default value for breastCupSize
-        languages: user?.user?.languages || [],
-        penisGirth: user?.user?.penisGirth || 0,
-        penisSize: user?.user?.penisSize || 0,
-        threesome: user?.user?.threesome || false,
-        orgies: user?.user?.orgies || false,
-        useToys: user?.user?.useToys || false,
-        footjob: user?.user?.footjob || false,
-        roleplay: user?.user?.roleplay || false,
-        events: user?.user?.events || false,
-        doublePenetration: user?.user?.doublePenetration || false,
-        oral: user?.user?.oral || false,
-        bondage: user?.user?.bondage || false,
       })
 
       let latitude = user?.user?.location?.coordinates[1]
@@ -201,8 +137,6 @@ const Profile = () => {
     }
   }, [user])
 
-  console.log('after useEffect fetch', formData)
-
   useEffect(() => {
     handleTabSubmit()
   }, [tab])
@@ -215,7 +149,7 @@ const Profile = () => {
         const photoAttachments = attachments.data.filter(
           (attachment) => attachment.type === 'photo',
         )
-        console.log('photoAttachments profile update:', photoAttachments)
+        console.log('photoAttachments :', photoAttachments)
         // console.log(photoAttachments)
         setPhotosMedia(photoAttachments)
         setLoading(false)
@@ -234,166 +168,13 @@ const Profile = () => {
   const playVideo = (url) => {
     setCurrentVideo(url)
   }
-
-  // formData funcations
   const handleInputChange = (e) => {
-    console.log('e', e)
-    // Check if e.target is defined
-    if (e.target) {
-      const { id, value } = e.target
-      console.log('🚀 ~ handleInputChange ~ value:', value)
-      setFormData((prevData) => ({
-        ...prevData,
-        [id]: value,
-      }))
-    }
-  }
-
-  const handleGenderChange = (value) => {
+    const { id, value } = e.target
     setFormData((prevData) => ({
       ...prevData,
-      gender: value,
+      [id]: value,
     }))
   }
-
-  const handleSliderChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      hourly: value,
-    }))
-  }
-
-  const handleInputNumberChange = (index, value) => {
-    setFormData((prevData) => {
-      const newHourly = [...prevData.hourly]
-      console.log('🚀 ~ setFormData ~ newHourly:', newHourly)
-      newHourly[index] = value
-      return {
-        ...prevData,
-        hourly: newHourly,
-      }
-    })
-  }
-
-  const handleSwitchChange = (checked) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      hostavailable: checked,
-    }))
-  }
-
-  const handleEthnicityChange = (values) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      selectedEthnicities: values,
-    }))
-  }
-
-  const handleSexualOrientationChange = (values) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      sexualOrientation: values,
-    }))
-  }
-
-  const handleBodyRatingChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      bodyRating: value,
-    }))
-  }
-
-  const handleAssSizeChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      assSize: value,
-    }))
-  }
-
-  const handleBodyTypeChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      bodyType: value,
-    }))
-  }
-  const handleHairColorChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      hairColor: value,
-    }))
-  }
-
-  const handleBreastCupSizeChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      breastCupSize: value,
-    }))
-  }
-
-  const handleLanguagesChange = (values) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      languages: values,
-    }))
-  }
-  const handleHeightChange = (value, field) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }))
-  }
-
-  const handleWeightChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      weight: value,
-    }))
-  }
-
-  const handlePenisSizeChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      penisSize: value,
-    }))
-  }
-
-  const handlePenisGirthChange = (value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      penisGirth: value,
-    }))
-  }
-
-  const handleCheckboxGroupChange = (checkedValues) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      threesome: checkedValues.includes('threesome'),
-      orgies: checkedValues.includes('orgies'),
-      useToys: checkedValues.includes('useToys'),
-      footjob: checkedValues.includes('footjob'),
-      roleplay: checkedValues.includes('roleplay'),
-      events: checkedValues.includes('events'),
-      doublePenetration: checkedValues.includes('doublePenetration'),
-      oral: checkedValues.includes('oral'),
-      bondage: checkedValues.includes('bondage'),
-    }))
-  }
-  const [isEditing, setEditing] = useState(false);
-
-
-  const handleEditLocation = () => {
-    setEditing(true);
-  };
-
-  const handleSaveLocation = () => {
-    setEditing(false);
-    // Save the updated address in your state or perform any necessary actions
-  };
-
-  const handleCancelEdit = () => {
-    setEditing(false);
-    // Reset the address to the previous value or perform any necessary actions
-  };
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (user !== null) {
@@ -404,34 +185,6 @@ const Profile = () => {
             id: user?.user?._id,
             name: formData.name,
             email: formData.email.toLowerCase(),
-            city: formData.city,
-            age: formData.age,
-            gender: formData.gender,
-            hourly: formData.hourly,
-            hostavailable: formData.hostavailable,
-            selectedEthnicities: formData.selectedEthnicities,
-            sexualOrientation: formData.sexualOrientation,
-            bodyRating: formData.bodyRating,
-            assSize: formData.assSize,
-            bodyType: formData.bodyType,
-            breastCupSize: formData.breastCupSize,
-            languages: formData.languages,
-            hairColor: formData.hairColor,
-            feet: formData.feet,
-            inches: formData.inches,
-            weight: formData.weight,
-            penisSize: formData.penisSize,
-            penisGirth: formData.penisGirth,
-            // Additional properties
-            threesome: formData.threesome,
-            orgies: formData.orgies,
-            useToys: formData.useToys,
-            footjob: formData.footjob,
-            roleplay: formData.roleplay,
-            events: formData.events,
-            doublePenetration: formData.doublePenetration,
-            oral: formData.oral,
-            bondage: formData.bondage,
             description: formData.bio,
             photo: user?.user?.photo,
           })
@@ -582,7 +335,6 @@ const Profile = () => {
       payload: null,
     })
   }
-
   const handleModalOk = async (files, type) => {
     console.log({ files })
 
@@ -967,373 +719,25 @@ const Profile = () => {
                         </div>
 
                         <div className='field-group'>
+                          <LocationModal
+                            isOpen={loactionModal}
+                            onRequestClose={handleCloseModal}
+                            onLocationChange={handleLocationChange}
+                            onOk={handlelocationModalOK}
+                          />
+
                           <label htmlFor='location' className='location-label'>
-                            Location:
+                            Location :
                           </label>
                           <div className='location-field'>
-                            {isEditing ? (
-                              <>
-                                <input
-                                  type='text'
-                                  id='location'
-                                  className='input-field'
-                                  style={{ height: '30px' }} // Set a fixed height for the input field
-                                  value={address}
-                                  onChange={(e) => setAddress(e.target.value)}
-                                />
-                                <button className='editBTN' type='button' onClick={handleSaveLocation}>
-                                  Save
-                                </button>
-                                <button className='editBTN' type='button' onClick={handleCancelEdit}>
-                                  Cancel
-                                </button>
-                              </>
-                            ) : (
-                              <>
-                                <div className='location-label-field' style={{ height: '30px' }}>
-                                  <p className='profileLocation' style={{ color: 'var(--textColor)' }}>{address}</p>
-                                </div>
-                                <button className='editBTN' type='button' onClick={handleEditLocation}>
-                                  <PiAirplaneTiltFill className='locationIcon' /> Edit Location
-                                </button>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                        {/* <div className='field-group'>
-                          <input
-                            type='text'
-                            id='city'
-                            autoComplete='off'
-                            value={formData.city}
-                            onChange={handleInputChange}
-                            className='input-field'
-                          />
-                          <label htmlFor='name' className='input-label'>
-                            City :
-                          </label>
-                        </div> */}
-                        <div className='field-group'>
-                          <input
-                            type='number'
-                            id='age'
-                            autoComplete='off'
-                            value={formData.age}
-                            onChange={handleInputChange}
-                            className='input-field'
-                            min={18}
-                            max={99}
-                          />
-                          <label htmlFor='name' className='input-label'>
-                            Age :
-                          </label>
-                        </div>
-                        {/* <div className='field-group'>
-                          <input
-                            type='number'
-                            id='distance'
-                            autoComplete='off'
-                            value={formData.distance}
-                            onChange={handleInputChange}
-                            className='input-field'
-                            maxLength={2}
-                            min={0}
-                            max={99}
-                          />
-                          <label htmlFor='name' className='input-label'>
-                            Distance (in miles):
-                          </label>
-                        </div> */}
-                        <div className='field-group' style={{ color: 'var(--textColor)' }}>
-                          {/* <label style={{ color: 'var(--textColor)' }} htmlFor=''>
-                            Gender:
-                          </label> */}
-                          <label htmlFor='name' className='input-label'>
-                            Gender :
-                          </label>
-                          <Select
-                            placeholder='Select gender'
-                            style={{ width: '100%', color: 'white' }}
-                            value={formData.gender}
-                            onChange={handleGenderChange}
-                          >
-                            <Select.Option value='male'>Male</Select.Option>
-                            <Select.Option value='gay'>Gay</Select.Option>
-                            <Select.Option value='tranny'>tranny</Select.Option>
-                            <Select.Option value='female'>Female</Select.Option>
-                          </Select>
-                        </div>
-
-                        <div className='field-group'>
-                          <label style={{ color: 'var(--textColor)' }}>Hourly (from - to):</label>
-                          <Slider
-                            range
-                            min={0}
-                            max={24}
-                            defaultValue={formData.hourly}
-                            onChange={handleSliderChange}
-                          />
-                          <div style={{ display: "flex", gap: 20 }}>
-                            <InputNumber
-                              min={0}
-                              max={24}
-                              value={formData.hourly[0]}
-                              onChange={(value) => handleInputNumberChange(0, value)}
-                            />
-                            <InputNumber
-                              min={0}
-                              max={24}
-                              value={formData.hourly[1]}
-                              onChange={(value) => handleInputNumberChange(1, value)}
-                            />
-                          </div>
-                        </div>
-                        <div
-                          className='field-group'
-                          style={{ display: 'flex', gap: 10, alignItems: 'center' }}
-                        >
-                          <label style={{ color: 'var(--textColor)' }}>Scene location (Host available):</label>
-                          <Select
-                            defaultValue={formData.hostavailable ? 'Yes' : 'No'}
-                            style={{ width: '100px',marginBottom:'30px' }}
-
-                          >
-                            <Option value='Yes'>Yes</Option>
-                            <Option value='No'>No</Option>
-                          </Select>
-                        </div>
-                        <div className='field-group'>
-                          {/* <label style={{ color: 'var(--textColor)' }}>Ethnicity:</label> */}
-                          <label htmlFor='name' className='input-label'>
-                            Ethnicity:
-                          </label>
-                          <Select
-                            placeholder='Select ethnicities'
-                            style={{ width: '100%' }}
-                            value={formData.selectedEthnicities}
-                            onChange={handleEthnicityChange}
-                          >
-                            <Select.Option value='White'>White</Select.Option>
-                            <Select.Option value='Ebony'>Ebony</Select.Option>
-                            <Select.Option value='Hispanic'>Hispanic</Select.Option>
-                            <Select.Option value='Asian'>Asian</Select.Option>
-                            <Select.Option value='Middle Eastern'>Middle Eastern</Select.Option>
-                            <Select.Option value='European'>European</Select.Option>
-                            <Select.Option value='German'>German</Select.Option>
-                            <Select.Option value='Indian'>Indian</Select.Option>
-                          </Select>
-                        </div>
-                        <div className='field-group'>
-                          <label className='input-label'>Sexual Orientation:</label>
-
-                          <Select
-                            placeholder='Select sexual orientation'
-                            style={{ width: '100%', color: 'white' }}
-                            value={formData.sexualOrientation}
-                            onChange={handleSexualOrientationChange}
-                          >
-                            <Select.Option value='straight'>Straight</Select.Option>
-                            <Select.Option value='gay'>Gay</Select.Option>
-                            <Select.Option value='trans'>Trans</Select.Option>
-                            <Select.Option value='bisexual'>Bisexual</Select.Option>
-                          </Select>
-                        </div>
-                        <div className='field-group'>
-                          <label style={{ color: 'var(--textColor)' }}>Body Rating (0-10):</label>
-                          <Slider
-                            min={0}
-                            max={10}
-                            defaultValue={formData.bodyRating}
-                            marks={{
-                              0: '0',
-                              1: '1',
-                              2: '2',
-                              3: '3',
-                              4: '4',
-                              5: '5',
-                              6: '6',
-                              7: '7',
-                              8: '8',
-                              9: '9',
-                              10: '10',
-                            }}
-                            onChange={handleBodyRatingChange}
-                            value={formData.bodyRating}
-                          />
-                        </div>
-
-                        <div className='field-group'>
-                          <label className='input-label'>Ass Size:</label>
-                          <Select
-                            placeholder='Select ass size'
-                            style={{ width: '100%' }}
-                            value={formData.assSize}
-                            onChange={handleAssSizeChange}
-                          >
-                            <Select.Option value='small'>Small</Select.Option>
-                            <Select.Option value='medium'>Medium</Select.Option>
-                            <Select.Option value='big'>Big</Select.Option>
-                          </Select>
-                        </div>
-
-                        <div className='field-group'>
-                          <label className='input-label'>Body Type:</label>
-                          <Select
-                            placeholder='Select body type'
-                            style={{ width: '100%' }}
-                            value={formData.bodyType}
-                            onChange={handleBodyTypeChange}
-                          >
-                            <Select.Option value='slim'>Slim</Select.Option>
-                            <Select.Option value='average'>Average</Select.Option>
-                            <Select.Option value='athletic'>Athletic</Select.Option>
-                            <Select.Option value='chubby'>Chubby</Select.Option>
-                            <Select.Option value='BBW'>BBW</Select.Option>
-                          </Select>
-                        </div>
-                        <div className='field-group'>
-                          <label className='input-label'>Hair Color:</label>
-                          <Select
-                            placeholder='Select body type'
-                            style={{ width: '100%' }}
-                            value={formData.hairColor}
-                            onChange={handleHairColorChange}
-                          >
-                            <Select.Option value='slim'>black</Select.Option>
-                            <Select.Option value='average'>brown</Select.Option>
-                            <Select.Option value='athletic'>blond</Select.Option>
-                            <Select.Option value='chubby'>white</Select.Option>
-                            <Select.Option value='BBW'>gray</Select.Option>
-                          </Select>
-                        </div>
-
-                        <div className='field-group'>
-                          <label style={{ color: 'var(--textColor)' }}>Breast Cup Size:</label>
-                          <Slider
-                            min={0}
-                            max={5}
-                            defaultValue={0}
-                            marks={{ 0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'DD', 5: 'DD+' }}
-                            markerHeight={5}
-                            style={{ color: 'white' }}
-                            value={formData.breastCupSize}
-                            onChange={(value) => handleBreastCupSizeChange(value)}
-                            tooltipVisible={false}
-                          />
-                        </div>
-
-                        <div className='field-group'>
-                          <label className='input-label'>Languages:</label>
-                          <Select
-                            style={{ width: '100%' }}
-                            value={formData.languages}
-                            onChange={handleLanguagesChange}
-                            mode='multiple'
-                          >
-                            <Select.Option value='English'>English</Select.Option>
-                            <Select.Option value='Spanish'>Spanish</Select.Option>
-                            <Select.Option value='French'>French</Select.Option>
-                          </Select>
-                        </div>
-                        <div>
-                          <div className='field-group'>
-                            <label style={{ color: 'var(--textColor)' }}>Height:</label>
-                            <div
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 20,
-                                marginTop: 10,
-                              }}
-                            >
-                              <InputNumber
-                                min={0}
-                                max={10} // Set the maximum feet value as needed
-                                value={formData.feet}
-                                onChange={(value) => handleHeightChange(value, 'feet')}
-                              />
-                              <span style={{ color: 'white' }}> feet </span>
-                              <InputNumber
-                                min={0}
-                                max={11} // Set the maximum inches value as needed
-                                value={formData.inches}
-                                onChange={(value) => handleHeightChange(value, 'inches')}
-                              />
-                              <span style={{ color: 'white' }}> inches </span>
+                            <div className='location-label-field'>
+                              <p className='profileLocattion'>{address}</p>
                             </div>
+                            <button className='editBTN' type='button' onClick={handleSetLocation}>
+                              <PiAirplaneTiltFill className='locationIcon' />{' '}
+                              <p className='loactionBTNText'>Add Location</p>
+                            </button>
                           </div>
-
-                          <div className='field-group'>
-                            <label style={{ color: 'var(--textColor)' }}>Weight:</label>
-                            <div
-                              style={{
-                                display: 'flex',
-                                gap: 10,
-                                marginTop: 10,
-                                alignItems: 'center',
-                              }}
-                            >
-                              <InputNumber
-                                min={0}
-                                max={1000} // Adjust the maximum weight as needed
-                                value={formData.weight}
-                                onChange={handleWeightChange}
-                              />
-                              <span style={{ color: 'white' }}> lbs </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Display the following fields only if 'male' or 'tranny' is selected */}
-                        {['male', 'tranny'].includes(formData.gender.toLowerCase()) && (
-                          <div>
-                            <div
-                              className='field-group'
-                              style={{ display: 'flex', gap: 20, alignItems: 'center' }}
-                            >
-                              <label style={{ color: 'var(--textColor)' }}>Penis Size (inches):</label>
-                              <InputNumber
-                                min={0}
-                                max={24} // Adjust the maximum size as needed
-                                value={formData.penisSize}
-                                onChange={handlePenisSizeChange}
-                              />
-                            </div>
-
-                            <div
-                              className='field-group'
-                              style={{ display: 'flex', gap: 20, alignItems: 'center' }}
-                            >
-                              <label style={{ color: 'var(--textColor)' }}>Penis Girth (inches):</label>
-                              <InputNumber
-                                min={0}
-                                max={10} // Adjust the maximum girth as needed
-                                value={formData.penisGirth}
-                                onChange={handlePenisGirthChange}
-                              />
-                            </div>
-                          </div>
-                        )}
-                        <div
-                          className='field-group'
-                          style={{ display: 'flex', flexDirection: 'column' }}
-                        >
-                          <label style={{ color: 'var(--textColor)' }}>Extras:</label>
-                          <Checkbox.Group
-                            options={[
-                              { label: 'Threesome', value: 'threesome' },
-                              { label: 'Orgies', value: 'orgies' },
-                              { label: 'Use Toys', value: 'useToys' },
-                              { label: 'Footjob', value: 'footjob' },
-                              { label: 'Roleplay', value: 'roleplay' },
-                              { label: 'Events', value: 'events' },
-                              { label: 'Double Penetration', value: 'doublePenetration' },
-                              { label: 'Oral', value: 'oral' },
-                              { label: 'Bondage', value: 'bondage' },
-                            ]}
-                            value={Object.keys(formData).filter((key) => formData[key])}
-                            onChange={handleCheckboxGroupChange}
-                          />
                         </div>
 
                         <div className='field-group'>

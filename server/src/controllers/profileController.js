@@ -19,9 +19,15 @@ const getProfile = async (req, res) => {
 const updateProfile = async (req, res) => {
   // #swagger.tags = ['profile']
   try {
-    let { id, latitude, longitude, ...rest } = req?.body;
-    let updateObject = { ...rest };
+    let { id, email, latitude, longitude, ...rest } = req?.body;
+    let updateObject = {email, ...rest };
 
+    if (email) {
+      const existingProfile = await User.findOne({ email, _id: { $ne: id } });
+      if (existingProfile) {
+        return res.status(400).json({ error: "Email already exist" });
+      }
+    }
     if (latitude !== undefined && longitude !== undefined) {
       updateObject.location = {
         type: "Point",
@@ -33,6 +39,7 @@ const updateProfile = async (req, res) => {
 
     let profile = await User.findOneAndUpdate(
       { _id: id },
+      
       {
         $set: updateObject
       },
@@ -44,6 +51,7 @@ const updateProfile = async (req, res) => {
     res.json(profile);
   } catch (error) {
     ErrorHandler(error, 500, req, res);
+    console.log({ error })
   }
 };
 
@@ -86,6 +94,26 @@ const updateProfilePhoto = async (req, res) => {
     ErrorHandler(error, 500, req, res);
   }
 };
+const deleteProfilePicture = async (req, res) => {
+  try {
+    const userId = req?.user?._id;
+    const user = await User.findById(userId);    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    if (user.photo) {
+      
+      user.photo = null;
+      await user.save();
 
-// export default { getProfile, updateProfile, updateProfilePhoto };
-module.exports = { getProfile, updateProfile, updateProfilePhoto };
+      res.json({ message: 'Profile picture deleted successfully' });
+    } else {
+      res.status(404).json({ error: 'Profile picture not found' });
+    }
+  } catch (error) {
+    ErrorHandler(error, 500, req, res);
+    console.error({ error });
+  }
+};
+
+module.exports = { getProfile, updateProfile, updateProfilePhoto,deleteProfilePicture };

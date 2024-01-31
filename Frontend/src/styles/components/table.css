@@ -55,7 +55,8 @@
   color: var(--text) !important;
 }
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-  color: var(--textColor) !important;
+  background-color: transparent !important;
+  color: var(--text) !important;
 }
 .ant-select-arrow {
   color: var(--text) !important;

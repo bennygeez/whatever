@@ -51,12 +51,11 @@
   color: var(--textColor) !important;
 }
 .ant-form-item-label label {
-  color: var(--textColor) !important;
+  color: var(--text) !important;
 }
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
   height: 37px;
   border-radius: 4px;
-  background-color: var(--dropdownColor);
 }
 
 .ant-collapse > .ant-collapse-item > .ant-collapse-header {
@@ -194,78 +193,4 @@ tr.ant-table-expanded-row:hover > td {
 }
 .ant-tabs-tab {
   color: rgb(18, 38, 71) !important;
-}
-.blocked {
-  color: gray;
-  cursor: not-allowed;
-  /* Add any other styling to visually indicate a disabled state */
-}
-.ant-checkbox+span {
-  color: var(--textColor) !important;
-}
-.ant-slider .ant-slider-mark-text {
-  color: var(--textColor) !important;
-}
-
-.ant-select-dropdown {
-  background-color: "red" !important;
-}
-
-.ant-select-item-option {
-  background-color: "green" !important;
-  color: #5070f2 !important;
-}
-
-.ant-select-item-option-active {
-  background-color: "red" !important;
-  color: #5070f2 !important;
-}
-
-.ant-modal .ant-modal-title {
-  color: var(--textColor) !important;
-  text-align: center !important;
-}
-
-.ant-select-item-option {
-  color: red !important; /* Set the text color for options */
-}
-.ant-select-item-option-content {
-  color: var(--textColor) !important; /* Set the text color for options */
-}
-.ant-select-dropdown .ant-select-item-option-selected .ant-select-item-option-content {
-  color: var(--textColor) !important; /* Set the text color for options */
-}
-.ant-select-dropdown .ant-select-item-option-content{
-  color: var(--textColor) !important; /* Set the text color for options */
-}
-.ant-input {
-  color: var(--textColor) !important; /* Set the text color for options */
-  
-}
-:where(.css-dev-only-do-not-override-mxhywb).ant-slider .ant-slider-rail{
-  background-color: var(--text) !important; /* Set the text color for options */
-}
-
-.ant-select:not(.ant-select-customize-input) .ant-select-selector{
-  width: 100%;
-  outline: 0;
-  border: 0;
-  margin-top: 30px;
-  border-bottom: 1px solid var(--primaryColor);
-  background-color: var(--dropdownColor);
-  color: var(--textColor);
-  /* padding: 10px 0; */
-  transition: 0.3s ease;
-  padding-left: 5px
-}
-.ant-select-selection-item{
-  color: var(--textColor);
-  background-color: var(--dropdownColor);
-  border-bottom: 1px solid var(--primaryColor);
-}
-.ant-select .ant-select-arrow {
-  top: 70% !important;
-}
-.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
-  border-color: var(--primaryColor);
 }

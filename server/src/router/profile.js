@@ -9,5 +9,6 @@ router.route("/").get(isAuthenticated, profile?.getProfile);
 // put
 router.route("/").put(isAuthenticated, profile?.updateProfile);
 router.route("/upload").post(isAuthenticated,profile.updateProfilePhoto);
+router.route("/delete-picture").delete(isAuthenticated,profile?.deleteProfilePicture);
 
 module.exports = router;

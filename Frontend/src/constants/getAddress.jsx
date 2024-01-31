@@ -4,9 +4,7 @@ export const fetchAddress = async (latitude, longitude) => {
 
   try {
     const response = await fetch(apiUrl)
-    console.log("🚀 ~ fetchAddress ~ response:", response)
     const data = await response.json()
-    console.log("🚀 ~ fetchAddress ~ data:", data)
 
     if (data.address) {
       const formattedAddress = `${

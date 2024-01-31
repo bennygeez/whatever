@@ -10060,9 +10060,6 @@ const Map = ({ handleNavigateToChat, handleToggleReviews }) => {
     [-37.90567525, 175.4753235167, '119'],
     [-37.9124889333, 175.4727737833, '278'],
   ]
-  // const addressPoints = [
-  //   [-37.8861293, 175.4592111833, '69'],
-  // ]
   useEffect(() => {
     if (!mapRef.current) {
       const map = L.map('map').setView([-37.87, 175.475], 12)
@@ -10091,7 +10088,6 @@ const Map = ({ handleNavigateToChat, handleToggleReviews }) => {
         })
           .bindPopup(
             <div>
-            
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Avatar src={influencer?.profileImage ? influencer?.profileImage : logo} />
 
@@ -10151,9 +10147,7 @@ const Map = ({ handleNavigateToChat, handleToggleReviews }) => {
       }}
     >
       <div id='map' style={{ height: '100%' }}></div>
-    
     </div>
-    
   )
 }
 // function Map() {

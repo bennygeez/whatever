@@ -1,6 +1,5 @@
 const logger = require("../functions/logger");
-const ErrorHandler = (message, statusCode, req, res,error) => {
-  // console.log("🚀 ~ ErrorHandler ~ error:", error)
+const ErrorHandler = (message, statusCode, req, res) => {
   logger.error({
     method: req.method,
     url: req.url,

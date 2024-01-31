@@ -8,13 +8,13 @@ export const getProfile = async () => {
   try {
     attachToken()
     const res = await privateAPI.get('/me')
-    console.log({ "user profile get res":res })
+    console.log({ res })
     if (res) {
       await store.dispatch({
         type: LOGIN,
         payload: { user: res?.data },
       })
-      console.log("res?.data",res?.data)
+      console.log(res?.data)
       return res?.data
     }
   } catch (err) {
@@ -27,13 +27,13 @@ export const getProfile = async () => {
 }
 
 export const updateProfile = async (payload) => {
-  console.log("🚀 ~ updateProfile ~ payload:", payload)
   try {
     attachToken()
     const res = await privateAPI.put('/me', payload)
     console.log('resprofile', res)
     if (res.status) {
       getProfile()
+
       return res?.data
     }
   } catch (err) {
@@ -97,18 +97,3 @@ export const deleteProfilePicture = async () => {
     })
   }
 }
-export const blockUserProfile = async (payload) => {
-  try {
-    const res = await privateAPI.post('/block/blockuser', { payload });
-console.log("res",res)
-    if (res.status) {
-      return res?.data;
-    }
-  } catch (err) {
-    notification.error({
-      message: err?.response?.data?.message || 'Server Error',
-      duration: 3,
-      style: { marginTop: '50px' },
-    });
-  }
-};

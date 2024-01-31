@@ -98,13 +98,10 @@
   width: 100%;
 }
 
-/* .rightsection span {
+.rightsection span {
   display: flex;
   padding: 40px 15px;
   padding-bottom: 20px;
-} */
-.ant-slider .ant-slider-mark-text-active {
-  color: var(--primaryColor);
 }
 
 .rightsection h3 {
@@ -631,7 +628,7 @@
     position: fixed;
     bottom: 10px;
     left: 10%;
-    width: 100%;
+    width: 80%;
     background-color: var(--dark);
     color: var(--gray300);
     height: fit-content;
@@ -743,79 +740,5 @@
     left: 6px;
     justify-content: flex-start;
     font-size: 14px;
-  }
-}
-.ant-slider:hover .ant-slider-dot-active {
-  /* border-color: var(--primary); */
-  visibility: hidden;
-}
-:where(.css-dev-only-do-not-override-mxhywb).ant-slider .ant-slider-dot-active {
-  border-color: var(--primary);
-  visibility: hidden;
-}
-.ant-slider-horizontal .ant-slider-dot {
-  position: absolute;
-  top: -2px;
-  margin-left: -4px;
-  width: 8px;
-  height: 8px;
-  border: 2px solid #fff;
-  background-color: #fff;
-  cursor: pointer;
-  border-radius: 50%;
-  transition: border-color 0.3s ease, background-color 0.3s ease;
-  visibility: hidden;
-}
-
-
-/* .ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
-  border-color: 0px;
-} */
-
-/* .ant-select:not(.ant-select-customize-input) .ant-select-selector{
-  border: 2px solid  !important;
-} */
-
-.ant-checkbox-group{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 100%;
-  flex-wrap: wrap;
-}
-.leftFeedSection {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(calc(25% - 20px), 1fr));
-  gap: 20px; /* Adjust the gap according to your design */
-  width: 1200px;
- 
- 
-}
-
-
-.skeleton-item {
-  flex: 1;
-  height: 400px;
-  width: 100%; /* Ensure the item takes the full width of the column */
-  background-color: var(--borderColor);
-  border-radius: 5px;
-  margin-top: 20px;
- /* Ensure content doesn't overflow */
-}
-
-@media screen and (max-width: 508px) {
-  .leftFeedSection {
-    width: 100%; /* Adjust to the full width for smaller screens */
-    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); /* Change to single column layout */
-  }
-
-  .skeleton-item {
-    height: auto; /* Adjust height as needed for smaller screens */
-  }
-
-  .Feed .leftFeedSection .card {
-    overflow: hidden !important;
   }
 }

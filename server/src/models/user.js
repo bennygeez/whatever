@@ -9,7 +9,7 @@ dotenv.config({ path: ".././src/config/config.env" });
 const userSchema = new Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   email: {
     type: String,
@@ -19,20 +19,20 @@ const userSchema = new Schema({
       if (!validator.isEmail(value)) {
         throw new Error("Invalid Email");
       }
-    },
+    }
   },
   description: String,
   phoneNumber: {
-    type: String,
+    type: String
   },
 
   prefix: {
-    type: String,
+    type: String
   },
 
   password: {
     type: String,
-    required: true,
+    required: true
     //validation will be before saving to db
   },
   photo: String,
@@ -40,11 +40,11 @@ const userSchema = new Schema({
   role: {
     type: String,
     enum: ["user", "admin"],
-    default: "user",
+    default: "user"
   },
   createdAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now()
   },
 
   longitude: String,
@@ -52,141 +52,39 @@ const userSchema = new Schema({
 
   emailVerified: {
     type: Boolean,
-    default: false,
+    default: false
   },
   emailVerificationToken: {
-    type: Number,
+    type: Number
   },
   emailVerificationTokenExpires: {
-    type: Date,
+    type: Date
   },
   passwordResetToken: {
-    type: Number,
+    type: Number
   },
   passwordResetTokenExpires: {
-    type: Date,
+    type: Date
   },
   lastLogin: {
-    type: Date,
+    type: Date
   },
 
   isActive: {
     type: Boolean,
-    default: true,
+    default: true
   },
 
   location: {
     type: {
       type: String,
       enum: ["Point"],
-      required: true,
+      // required: true
     },
     coordinates: {
       type: [Number],
-      required: true,
-    },
-  },
-  blockedUsers: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "user",
-    },
-  ],
-  blockStatus: { type: Boolean, default: false },
-  city: {
-    type: String,
-    // required: true,
-  },
-  age: {
-    type: Number,
-    min: 18,
-  },
-  // distance: {
-  //   type: Number,
-  //   default: 10,
-  // },
-  gender: {
-    type: String,
-    default: "female",
-  },
-  hourly: [Number],
-  hostavailable: {
-    type: Boolean,
-    default: false,
-  },
-  sexualOrientation: {
-    type: String,
-    // enum: ["straight", "gay", "trans", "bisexual"],
-    // default: "straight",
-  },
-  selectedEthnicities: {
-    type: String,
-    // enum: ["white", "ebony", "Hispanic", "Asian", "middle eastern", "European", "German", "Indian"],
-  },
-  bodyRating: {
-    type: Number,
-    // enum: [1, 2, 3, 4, 5],
-  },
-  assSize:{
-    type: String,
-    // enum: ["small", "medium", "large"],
-  },
-  bodyType: {
-    type: String,
-    // enum: ["slim", "athletic", "average", "curvy", "bbw"],
-  },
-  breastCupSize: {
-    type: String,
-    // enum: ["A", "B", "C", "D", "E", "F", "G"],
-  },
-  languages: {
-    type: [String],
-    // enum: ["English", "Spanish", "French", "German", "Italian", "Russian", "Arabic", "Hindi", "Chinese", "Japanese", "Korean", "Portuguese"],
-  },
-  hairColor :{
-    type:String,
-  },
-  feet:{
-    type:Number,
-  },
-  inches:{
-    type:Number,
-  },
-  weight:{
-    type:Number,
-  },
-  penisSize:{
-    type:Number,
-  },
-  penisGirth:{
-    type:Number,
-  },
-  threesome:{
-    type:Boolean,
-  },
-  orgies:{
-    type:Boolean
-  },
-  useToys:{
-    type:Boolean
-  },
-  footjob:{
-    type:Boolean
-  },
-  roleplay:{
-    type:Boolean
-  },
-  events:{
-    type:Boolean
-  },
-  doublePenetration:{
-    type:Boolean
-  },
-  oral:{
-    type:Boolean
-  },
-  bondage:{
-    type:Boolean
+      // required: true
+    }
   }
 });
 
@@ -200,12 +98,18 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+userSchema.pre("save", async function (next) {
+  if (this.isModified("latitude") || this.isModified("longitude")) {
+    this.location = {
+      type: "Point",
+      coordinates: [parseFloat(this.longitude), parseFloat(this.latitude)],
+    };
+  }
+  next();
+});
 //jwtToken
 userSchema.methods.getJWTToken = function () {
-  return jwt.sign(
-    { _id: this._id, emailVerified: this.emailVerified },
-    process.env.JWT_SECRET
-  );
+  return jwt.sign({ _id: this._id,emailVerified:this.emailVerified }, process.env.JWT_SECRET);
 };
 
 //compare password

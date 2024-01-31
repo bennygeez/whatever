@@ -20,15 +20,6 @@
   align-items: center;
   padding: 10px;
 }
-.filterlinks{
-  color: var(--textColor);
-  flex: 1;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-}
 
 .Feed .chatBTNS .active {
   color: var(--primaryColor) !important;
@@ -53,13 +44,6 @@
   align-items: center;
   gap: 1rem;
 }
-
-/* .Feed .leftFeedSection .card .card-header-parent {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-} */
 
 .Feed .leftFeedSection .card .card-header .name-date .cardDate {
   color: var(--gray300);
@@ -271,9 +255,4 @@
     gap: 10px;
     flex-basis: auto;
   }
-}
-
-
-.ant-modal-content {
-  color: var(--whiteColor) !important;
 }

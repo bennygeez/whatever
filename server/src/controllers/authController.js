@@ -10,8 +10,7 @@ const register = async (req, res) => {
   // #swagger.tags = ['auth']
   try {
     const { name, email, password, role, latitude, longitude } = req.body;
-    console.log("latitude", latitude);
-    // console.log("🚀 ~ file: authController.js:13 ~ register ~ name, email, password, role, latitude, longitude:", name, email, password, role, latitude, longitude)
+    console.log("🚀 ~ file: authController.js:13 ~ register ~ name, email, password, role, latitude, longitude:", name, email, password, role, latitude, longitude)
     if (
       !password.match(
         /(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+!=])(?=.{8,}).*$/
@@ -34,14 +33,18 @@ const register = async (req, res) => {
       email,
       password,
       role,
-      location: {
+
+
+    }
+    if (latitude !== undefined && longitude !== undefined) {
+      payload.location = {
         type: "Point",
-        coordinates: [parseFloat(longitude), parseFloat(latitude)]
-      }
-    };
+        coordinates: [parseFloat(longitude), parseFloat(latitude)],
+      };
+    }
     console.log("payload", payload);
     let newUser = await User.create(payload);
-    
+
     if (newUser)
       return SuccessHandler({ message: "Registered successfully" }, 200, res);
   } catch (error) {
@@ -90,15 +93,15 @@ const requestEmailToken = async (req, res) => {
     await user.save();
     const message = `Your email verification token is ${emailVerificationToken} and it expires in 10 minutes`;
     const subject = `Email verification token`;
-    let info = await sendMail(email, subject, message)
+    await sendMail(email, subject, message)
     // .then(result=>{
     //   console.log("🚀 ~ file: authController.js:89 ~ awaitsendMail ~ result:", result)
     //   if(result){
-    //     return SuccessHandler(
-    //       `Email verification token sent to ${email}`,
-    //       200,
-    //       res
-    //     );
+    return SuccessHandler(
+      `Email verification token sent to ${email}`,
+      200,
+      res
+    );
     //   }else{
     //     return ErrorHandler("invalid email", 500, req, res);
     //   }
@@ -147,7 +150,7 @@ const login = async (req, res) => {
   // #swagger.tags = ['auth']
 
   try {
-    const { email, password } = req.body;
+    const { email, password, latitude, longitude } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
       return ErrorHandler("User does not exist", 400, req, res);
@@ -155,7 +158,15 @@ const login = async (req, res) => {
 
     let result = await user.comparePassword(password);
     if (result) {
+      // user.latitude = latitude;
+      // user.longitude = longitude;
+      user.location = {
+        type: "Point",
+        coordinates: [parseFloat(longitude), parseFloat(latitude)],
+      };
+      await user.save()
       let jwtToken = await user.getJWTToken();
+
       return SuccessHandler(
         {
           token: jwtToken,
@@ -177,7 +188,7 @@ const getUsers = async (req, res) => {
   // #swagger.tags = ['auth']
 
   try {
-    
+
     const users = await User.find({ emailVerified: true }).select("-password");
     res.json(users);
   } catch (error) {
@@ -305,6 +316,6 @@ module.exports = {
   getUsers,
   verifyEmail,
   requestEmailToken,
-   forgotPassword,
+  forgotPassword,
   resetPassword,
 };

@@ -15,7 +15,6 @@
 @import './components/Chat/ChatApp.css';
 @import './components/UploadModal/UploadModal.css';
 @import './components/LocationModal/LocationModal.css';
-@import './components/FilterModal/FilterModal.css';
 
 /* Page CSS */
 @import './pages/login.css';
@@ -29,4 +28,3 @@
 @import './pages/Feed.css';
 @import './pages/EmailVerification.css';
 @import './pages/ForgetPassword.css';
-@import './pages/UserSearch.css';

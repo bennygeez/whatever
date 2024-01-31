@@ -29,40 +29,29 @@ const Signup = () => {
 
     return Promise.resolve()
   }
-  console.log("setLocation",setLocation)
-  const handleLocationChange = async (e) => {
-    try {
-      const location = await getUserLocation();
-      const { latitude, longitude } = location;
-      console.log("🚀 ~ handleLocationChange ~ location:", location)
-  
-      if (!isNaN(latitude) && !isNaN(longitude)) {
-        setSetLocation(e.target.checked);
-        setLatitude(latitude);
-        setLongitude(longitude);
-      } else {
-        // Handle case where latitude or longitude is NaN
-        message.error({ content: 'Invalid location coordinates', duration: 3 });
-      }
-    } catch (error) {
-      console.error('Error in handleLocationChange:', error.message);
-      message.error({ content: error?.message + ' Turn on Location', duration: 3 });
-    }
-  };
-  
-  useEffect(() => {
-    if (setLocation) {
-      handleLocationChange({ target: { checked: true } })
-    }
-  }, [setLocation])
+  // const handleLocationChange = async (e) => {
+  //   try {
+  //     const location = await getUserLocation()
+  //     console.log('Location in YourComponent:', location)
+  //     setSetLocation(e.target.checked)
+
+  //     setLatitude(location.latitude)
+  //     setLongitude(location.longitude)
+  //   } catch (error) {
+  //     message.error({ content: error?.message + ' Turn on Location', duration: 3 })
+  //     console.error('Error in YourComponent:', error.message)
+  //   }
+  // }
+  // useEffect(() => {
+  //   if (setLocation) {
+  //     handleLocationChange({ target: { checked: true } })
+  //   }
+  // }, [setLocation])
   const onFinish = async (values) => {
-    // console.log("🚀 ~ onFinish ~ values:", values)
     setLoading(true)
     const val = {
       ...values,
       role: 'user',
-      latitude: latitude,
-      longitude: longitude,
     }
     console.log({ val })
     await dispatch(authSignup(val, navigate))

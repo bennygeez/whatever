@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Dropdown, Image, Input, Space,notification } from 'antd'
+import { Avatar, Badge, Button, Dropdown, Image, Input, Space } from 'antd'
 
 import React, { useEffect, useRef, useState } from 'react'
 import { BsThreeDots } from 'react-icons/bs'
@@ -15,7 +15,6 @@ import moment from 'moment'
 import { MdAddPhotoAlternate } from 'react-icons/md'
 import { SET_CHAT_MESSAGES } from '../../redux/types/chatTypes'
 import ChatImageModal from './ChatImageModal'
-import { blockUserProfile } from '../../services/profile'
 
 const Messages = ({ chatId, handleBackClick, chatUser }) => {
   console.log('chatId from CHAT: ', chatId)
@@ -39,65 +38,25 @@ const Messages = ({ chatId, handleBackClick, chatUser }) => {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
     }
   }, [])
-  console.log("user?.user?._id,",user?.user?._id,)
-  const uid=user?.user?._id;
-  const blockId=chatUser?.[0]?._id;
 
- const handleBlockProfile = async (blockId,uid) => {
-   console.log("🚀 ~ handleBlockProfile ~ uid:", uid)
-   console.log("🚀 ~ handleBlockProfile ~ blockId:", blockId)
-   try {
-     const response = await blockUserProfile({
-       blockId: blockId,
-       uid: uid,
-     });
-
-     if(response?.success){
-       notification.success({
-         message: 'Success',
-         description: 'Profile Blocked Successfully',
-         duration: 3,
-       style: { marginTop: '50px' },
-       });
-     }
-     setIsBlocked(true);
-     console.log("response", response);
-
-     // Handle the response as needed
-   } catch (error) {
-     console.log('Error:', error);
-   }
- };
- const [isBlocked, setIsBlocked] = useState(false);
-  const chatMessagesItems = [
-    // {
-    //   label: <span onClick={() => navigate('/profile')}>Profile</span>,
-    //   key: '0',
-    // },
-    // {
-    //   label: 'Archive',
-    //   key: '1',
-    // },
-    // {
-    //   label: 'Muted',
-    //   key: '3',
-    // },
-    // {
-    //   label: 'Deleted',
-    //   key: '4',
-    // },
-      {
-        label: (
-          <span
-            onClick={() => !isBlocked && handleBlockProfile(blockId, uid)}
-            className={isBlocked ? 'blocked' : ''}
-          >
-            {isBlocked ? 'Blocked' : 'Block'}
-          </span>
-        ),
-      key: '0',
-    },
-  ]
+  // const chatMessagesItems = [
+  //   {
+  //     label: <span onClick={() => navigate('/profile')}>Profile</span>,
+  //     key: '0',
+  //   },
+  //   {
+  //     label: 'Archive',
+  //     key: '1',
+  //   },
+  //   {
+  //     label: 'Muted',
+  //     key: '3',
+  //   },
+  //   {
+  //     label: 'Deleted',
+  //     key: '4',
+  //   },
+  // ]
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
@@ -213,7 +172,7 @@ const Messages = ({ chatId, handleBackClick, chatUser }) => {
             </div>
           </div>
           <div className='right'>
-            <div>
+            {/* <div>
               <Dropdown
                 menu={{
                   items: chatMessagesItems,
@@ -226,7 +185,7 @@ const Messages = ({ chatId, handleBackClick, chatUser }) => {
                   </Space>
                 </a>
               </Dropdown>
-            </div>
+            </div> */}
           </div>
         </div>
       </header>
@@ -255,7 +214,7 @@ const Messages = ({ chatId, handleBackClick, chatUser }) => {
           })}
         <div />
       </div>
-      {/* <div className='chatBox'>
+      <div className='chatBox'>
         <div className='input-btn'>
           <div className='form'>
             <Button
@@ -284,39 +243,7 @@ const Messages = ({ chatId, handleBackClick, chatUser }) => {
             </div>
           </div>
         </div>
-      </div> */}
-      {!isBlocked && (
-        <div className='chatBox'>
-          <div className='input-btn'>
-            <div className='form'>
-              <Button
-                icon={<MdAddPhotoAlternate size={30} />}
-                className='photovideoBTN'
-                onClick={handleModal}
-              />
-
-              <Input
-                type='text'
-                value={input}
-                className='chatInput'
-                onKeyDown={handleKeyDown}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder='Enter Message...'
-              />
-
-              <div
-                onClick={sendMessageHandler}
-                style={{ padding: '.7rem 1rem', gap: '1rem' }}
-                className='primaryBTN'
-                type='submit'
-              >
-                <p className='txt'>Send</p>
-                <IoSend />
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
       <ChatImageModal
         title='Send Photos'
         visible={isModalVisible}

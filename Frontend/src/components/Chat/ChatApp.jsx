@@ -450,7 +450,6 @@ const ChatApp = () => {
                                       />
                                     }
                                   />
-                                  
                                   <div className='availiblity'>
                                     <div
                                       style={{ display: 'flex', alignItems: 'start', gap: '1rem' }}

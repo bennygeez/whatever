@@ -16,7 +16,6 @@ import Map from '../pages/Map/Map'
 import EmailVerification from '../pages/EmailVerification'
 import ForgetPassword from '../pages/ForgetPassword'
 import ResetPassword from '../pages/ResetPassword'
-import UserSearch from '../pages/UserSearch'
 
 const Routers = () => {
   const isAuthenticated = localStorage.getItem('token')
@@ -38,7 +37,6 @@ const Routers = () => {
 
           <Route path='/map' element={<Map />} />
           <Route path='/profile' element={<Profile />} />
-          <Route path='/usersearch' element={<UserSearch />} />
           <Route path='/video' element={<VideoRecorder />} />
           <Route path='/videoUpload' element={<VideoUpload />} />
           <Route path='/photo-capture' element={<PhotoCapture />} />

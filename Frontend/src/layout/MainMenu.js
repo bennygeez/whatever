@@ -1,7 +1,6 @@
 import { Menu } from 'antd'
 import {
   FaComment,
-  FaFilter,
   FaGlobeEurope,
   FaPaperPlane,
   FaRocket,
@@ -19,22 +18,10 @@ import { useNavigate } from 'react-router-dom'
 import Logo from '../assets/logosidbar.png'
 import { useSelector } from 'react-redux'
 import { useState } from 'react'
-import FilterModal from '../components/FilterModal/FilterModal'
 
 const MainMenu = ({ active }) => {
   const theme = useSelector((state) => state.theme.theme)
   const navigate = useNavigate()
-  const [filterModalVisible, setFilterModalVisible] = useState(false);
-
-  const handleFilterModalOk = () => {
-    // Handle FilterModal OK logic here
-    setFilterModalVisible(false);
-  };
-
-  const handleFilterModalCancel = () => {
-    // Handle FilterModal cancel logic here
-    setFilterModalVisible(false);
-  };
 
   return (
     <Menu
@@ -193,83 +180,7 @@ const MainMenu = ({ active }) => {
               </p>
             </Menu.Item>
           </div>
-
-          <div
-            style={{
-              boxShadow: active === 'usersearch' ? '0 0 4px var(--primary)' : 'none', // Add box shadow when active
-              borderRadius: '10px',
-            }}
-          >
-            <Menu.Item
-              key='usersearch'
-              className={'sidebar-menu'}
-              icon={
-                <FaFilter
-                  style={{
-                    color: active === 'usersearch' ? 'hotpink' : 'lightcoral',
-                    boxShadow: active === 'usersearch' ? '0px 0px 3px 3px pink' : 'none',
-                    borderRadius: '10px',
-                  }}
-                  className='menu-icon'
-                />
-              }
-              onClick={() => navigate('/usersearch')}
-              style={{
-                paddingLeft: '5px',
-              }}
-            >
-              <p
-                style={{
-                  color: active === 'usersearch' ? 'hotpink' : '#fff',
-                }}
-              >
-                User Search
-              </p>
-            </Menu.Item>
-          </div>
-
-
-
-          {/* filter */}
-          {/* <div
-            style={{
-              boxShadow: active === 'filter' ? '0 0 4px var(--primary)' : 'none', // Add box shadow when active
-              borderRadius: '10px',
-            }}
-          >
-            <Menu.Item
-              key='=filter'
-              className={'sidebar-menu'}
-              icon={
-                <FaFilter
-                  style={{
-                    color: active === '=filter' ? 'hotpink' : '#004080',
-                    boxShadow: active === 'filter' ? '0px 0px 3px 3px pink' : 'none',
-                    borderRadius: '10px',
-                  }}
-                  className='menu-icon'
-                />
-              }
-              onClick={() => setFilterModalVisible(true)}
-              style={{
-                paddingLeft: '5px',
-              }}
-            >
-              <p
-                style={{
-                  color: active === 'filter' ? 'hotpink' : '#fff',
-                }}
-              >
-                User Search
-              </p>
-            </Menu.Item>
-          </div> */}
         </div>
-        <FilterModal
-        visible={filterModalVisible}
-        onOk={handleFilterModalOk}
-        onCancel={handleFilterModalCancel}
-      />
         <div
           style={{
             margin: '1% 0',
