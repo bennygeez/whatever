@@ -206,7 +206,7 @@ const MainMenu = ({ active }) => {
               icon={
                 <FaFilter
                   style={{
-                    color: active === 'usersearch' ? 'hotpink' : 'lightcoral',
+                    color: active === 'usersearch' ? 'red' : 'red',
                     boxShadow: active === 'usersearch' ? '0px 0px 3px 3px pink' : 'none',
                     borderRadius: '10px',
                   }}

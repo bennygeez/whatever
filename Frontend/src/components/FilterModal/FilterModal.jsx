@@ -20,7 +20,6 @@ const FilterModal = ({ visible, onOk, onCancel }) => {
   const [city, setCity] = useState('')
   const [ageRange, setAgeRange] = useState([18, 99])
   const [gender, setGender] = useState('')
-  const [hourlyRange, setHourlyRange] = useState([0, 24])
   const [hostAvailable, setHostAvailable] = useState(false)
   const [selectedEthnicities, setSelectedEthnicities] = useState('')
   const [sexualOrientation, setSexualOrientation] = useState('')
@@ -59,7 +58,7 @@ const FilterModal = ({ visible, onOk, onCancel }) => {
       hairColor: 'BBW',
       height: '10',
       hostAvailable: true,
-      hourly: [4, 18],
+      hourly: 10,
       languages: 'Spanish',
       oral: false,
       orgies: false,
@@ -87,7 +86,7 @@ const FilterModal = ({ visible, onOk, onCancel }) => {
       hairColor: 'BBW',
       height: '10',
       hostAvailable: true,
-      hourly: [4, 18],
+      hourly: 10,
       languages: 'Spanish',
       oral: false,
       orgies: false,
@@ -109,7 +108,7 @@ const handleOk = () => {
       profile.city.toLowerCase().includes(city.toLowerCase()) ||
       profile.age >= ageRange[0] || profile.age <= ageRange[1] ||
       profile.gender.toLowerCase() === gender.toLowerCase() ||
-      profile.hourly[0] >= hourlyRange[0] || profile.hourly[1] <= hourlyRange[1] ||
+      profile.hourly[0] >= 0 ||
       profile.hostAvailable === hostAvailable ||
       (selectedEthnicities === '' || profile.selectedEthnicities.toLowerCase() === selectedEthnicities.toLowerCase()) ||
       (sexualOrientation === '' || profile.sexualOrientation.toLowerCase() === sexualOrientation.toLowerCase()) ||
@@ -208,29 +207,19 @@ const handleOk = () => {
           </div>
 
           <div>
-            <label style={{ color: 'white' }}>Hourly (from - to):</label>
+            <label style={{ color: 'white' }}>Hourly (from):</label>
             <Slider
-              range
               min={0}
-              max={24}
-              defaultValue={hourlyRange}
-              onChange={(value) => setHourlyRange(value)}
+              max={5000}
+              defaultValue={0} // Set the default value to 0
             />
             <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
               <InputNumber
                 min={0}
-                max={24}
-                value={hourlyRange[0]}
-                onChange={(value) => setHourlyRange([value, hourlyRange[1]])}
+                max={5000}
               />
-              <InputNumber
-                min={0}
-                max={24}
-                value={hourlyRange[1]}
-                onChange={(value) => setHourlyRange([hourlyRange[0], value])}
-              />
-            </div>
           </div>
+        </div>
 
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
             <label style={{ color: 'white' }}>Scene location (Host available):</label>

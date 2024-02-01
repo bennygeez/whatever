@@ -610,29 +610,33 @@ const Home = () => {
           </div>
 
           <div>
-            <label style={{ color: 'white' }}>Hourly (from - to):</label>
-            <Slider
-              range
-              min={0}
-              max={24}
-              defaultValue={hourlyRange}
-              onChange={(value) => setHourlyRange(value)}
-            />
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-              <InputNumber
+              <label style={{ color: 'white' }}>Hourly:</label>
+              <Slider
+                range
                 min={0}
-                max={24}
-                value={hourlyRange[0]}
-                onChange={(value) => setHourlyRange([value, hourlyRange[1]])}
+                max={5000}
+                defaultValue={[0]} // Set the default range from 0 to 5000
+                onChange={(value) => {
+                  // Ensure the range stays within 0 to 5000
+                  const [minValue, maxValue] = value;
+                  if (minValue < 0) {
+                    value[0] = 0;
+                  }
+                  if (maxValue > 5000) {
+                    value[1] = 5000;
+                  }
+                  setHourlyRange(value);
+                }}
               />
-              <InputNumber
-                min={0}
-                max={24}
-                value={hourlyRange[1]}
-                onChange={(value) => setHourlyRange([hourlyRange[0], value])}
-              />
+              <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                <InputNumber
+                  min={0}
+                  max={5000}
+                  value={hourlyRange} 
+                  onChange={(value) => setHourlyRange(value)} 
+                />
+              </div>
             </div>
-          </div>
 
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
             <label style={{ color: 'white' }}>Scene location (Host available):</label>

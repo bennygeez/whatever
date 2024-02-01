@@ -1065,29 +1065,34 @@ const Profile = () => {
                         </div>
 
                         <div className='field-group'>
-                          <label style={{ color: 'var(--textColor)' }}>Hourly (from - to):</label>
-                          <Slider
-                            range
-                            min={0}
-                            max={24}
-                            defaultValue={formData.hourly}
-                            onChange={handleSliderChange}
-                          />
-                          <div style={{ display: "flex", gap: 20 }}>
-                            <InputNumber
+                          <label style={{ color: 'var(--textColor)' }}>Hourly:</label>
+                            <Slider
+                              range
                               min={0}
-                              max={24}
-                              value={formData.hourly[0]}
-                              onChange={(value) => handleInputNumberChange(0, value)}
+                              max={5000}
+                              defaultValue={[0]} // Set the default range from 0 to 5000
+                              onChange={(value) => {
+                                // Ensure the range stays within 0 to 5000
+                                const [minValue, maxValue] = value;
+                                if (minValue < 0) {
+                                  value[0] = 0;
+                                }
+                                if (maxValue > 5000) {
+                                  value[1] = 5000;
+                                }
+                                handleSliderChange(value); // Call your custom handler with the adjusted value
+                              }}
                             />
-                            <InputNumber
-                              min={0}
-                              max={24}
-                              value={formData.hourly[1]}
-                              onChange={(value) => handleInputNumberChange(1, value)}
-                            />
+                            <div style={{ display: "flex", gap: 20 }}>
+                              <InputNumber
+                                min={0}
+                                max={5000}
+                                value={formData.hourly[0]}
+                                onChange={(value) => handleInputNumberChange(0, value)}
+                              />
                           </div>
                         </div>
+                        
                         <div
                           className='field-group'
                           style={{ display: 'flex', gap: 10, alignItems: 'center' }}

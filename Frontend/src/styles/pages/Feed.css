@@ -28,6 +28,7 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
+  float: right;
 }
 
 .Feed .chatBTNS .active {
