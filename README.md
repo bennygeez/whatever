@@ -13,10 +13,10 @@ Before you begin, ensure you have met the following requirements:
 To install the project, follow these steps:
 
 1. Clone the repository to your local machine:
-git clone https://yourrepositoryurl.com
+```git clone https://yourrepositoryurl.com```
 
 2. Navigate into the project directory:
-cd your-project-directory
+```cd your-project-directory```
 
 ## Configuration
 
@@ -26,17 +26,17 @@ Briefly mention any configuration steps or important configurations directly wit
 
 To run the application, execute the following command in the root directory of your project:
 
-docker-compose up
+```docker-compose up```
 
 This command builds, (re)creates, starts, and attaches to containers for a service. If you want to run it in detached mode (in the background), use:
 
-docker-compose up -d
+```docker-compose up -d```
 
 ## Stopping the Application
 
 To stop the application, use the following command:
 
-docker-compose down
+```docker-compose down```
 
 This command stops and removes containers, networks, volumes, and images created by `up`.
 
