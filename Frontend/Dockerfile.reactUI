@@ -1,0 +1,21 @@
+# Use a Node.js version that is compatible with all your dependencies
+FROM node:18
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy only package.json initially to leverage Docker cache
+COPY ./package.json ./yarn.lock* ./
+
+# Install dependencies
+RUN yarn install
+
+# Copy the rest of your application code
+COPY ./public ./public
+COPY ./src ./src
+
+# Expose the port the app runs on
+EXPOSE 3000
+
+# Command to run your app
+CMD ["yarn", "start"]

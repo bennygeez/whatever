@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  react-ui:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile.reactUI
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - node-api
+
+  node-api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.node
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=production
